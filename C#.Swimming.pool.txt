@@ -1,0 +1,140 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+
+//Julian d07 15-09-2025
+//Opgave 46
+//Lav et program der kan håndtere svømmehals billetsalg.
+
+namespace programmerings_øvelse
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //Definerer variabler
+            int vbillet = 42;
+            int pbillet = 23;
+            int bbillet = 15;
+            bool flag = false;
+            bool billetflag = true;
+            int bpris = 0;
+            int antal = 0;
+            int pris = 0;
+            int totalpris = 0;
+            string svar = "ja";
+            string bsvar = "a";
+            int bantal = 0;
+
+            //Gentager sig selv hvis man vil købe mere end en type billet
+            while (svar.ToLower() == "ja")
+            {
+                //Clearer consollen hver gang man starter forfra
+                Console.Clear();
+
+                //Header med farve
+                Console.BackgroundColor = ConsoleColor.DarkCyan;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Ballerup svømmehal - Priser\n");
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.Gray;
+
+                //Udskriver den nuværende pris hver gang man genstarter
+                Console.WriteLine($"Dine billetter koster ind til videre {totalpris:C}");
+
+                //Udskriver navne og priser på billetter
+                Console.WriteLine($"\nVoksenbillet (16 - 64){vbillet,20:C}");
+                Console.WriteLine($"Pensionistbillet (65 - ){pbillet,18:C}");
+                Console.WriteLine($"Børnebillet (7 - 15) {bbillet,21:C}");
+                Console.WriteLine("\nBørn under 7 kan komme gratis ind i følgeskab med en voksen");
+
+                //Beder om type på billet og aflæser input
+                Console.WriteLine("\nHvilken type billet vil du købe?");
+                string btype = Console.ReadLine();
+
+                //Sætter prisen efter hvilken billettype der blev indtastet
+                switch (btype.ToLower())
+                {
+                    case "voksenbillet":
+                        bpris = vbillet;
+                        flag = false;
+                        break;
+
+                    case "pensionistbillet":
+                        bpris = pbillet;
+                        flag = false;
+                        break;
+
+                    case "børnebillet":
+                        bpris = bbillet;
+                        flag = false;
+                        break;
+
+                    default:
+                        flag = true;
+                        Console.WriteLine("Det er ikke en mulighed");
+                        Console.ReadLine();
+                        break;
+                }
+
+                //Går videre hvis man har indtastet en valid mulighed
+                if (flag == false)
+                {
+                    //Vil ikke spørge om man har børn under 7 med igen, hvis den har spurgt en gang
+                    //Jeg prøvede også med en do-while, men jeg kunne ikke få det til at virke
+                    if (billetflag == true)
+                    {
+                        //Spørger om man har børn under 7 år med hvis man har valgt voksen eller pensionistbillet
+                        if (btype.ToLower() == "voksenbillet" || btype.ToLower() == "pensionistbillet")
+                        {
+                            //Spørger om man har børn under 7 med og aflæser input
+                            Console.WriteLine("\nHar du børn under 7 med? ja/nej");
+                            bsvar = Console.ReadLine();
+                            billetflag = false;
+
+                            //Beder om at indtaste altallet af børn hvis man svarer ja
+                            if (bsvar.ToLower() == "ja")
+                            {
+                                Console.WriteLine("\nHvor mange børn har du med? Indtast et tal");
+                                bantal = int.Parse(Console.ReadLine());
+                            }
+                        }
+                    }
+                    //Spørger om hvor mange billetter man vil købe af den type man har valgt 
+                    Console.WriteLine($"\nHvor mange {btype}er vil du købe? Indtast et tal");
+                    antal = int.Parse(Console.ReadLine());
+
+                    //Beregner pris                
+                    pris = bpris * antal;
+                    totalpris = pris + totalpris;
+
+                    //Spørger om man også vil købe andre billetter
+                    Console.WriteLine("\nVil du købe flere typer billeter? ja/nej");
+                    svar = Console.ReadLine();
+                }
+            }
+
+            //Afslutter programmet og udskriver total pris med farve hvis man ikke vil købe andet
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write($"\nDin totalpris er {totalpris:C}");
+            Console.ForegroundColor= ConsoleColor.Gray;
+
+            //Udskriver til skærmen hvis man har sagt ja til, at man har børn under 7 med
+            if (bsvar.ToLower() == "ja")
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($", og du har {bantal} børn under 7 år med");
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
+
+            //Udskriver til skærmen at programmet vil afslutte
+            Console.WriteLine("\n\nTak for dit køb, programmet vil nu afslutte");
+
+            //Venter på tastetryk
+            Console.ReadLine();
+        }
+    }
+}
