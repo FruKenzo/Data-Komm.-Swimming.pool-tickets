@@ -5,8 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-//Julian d07 15-09-2025
-//Opgave 46
+//Julian Ishøj d07 15-09-2025
 //Lav et program der kan håndtere svømmehals billetsalg.
 
 namespace programmerings_øvelse
@@ -138,3 +137,4 @@ namespace programmerings_øvelse
         }
     }
 }
+
